@@ -5,6 +5,7 @@
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace IdentityServer
 {
@@ -29,7 +30,7 @@ namespace IdentityServer
         public static IEnumerable<ApiResource> Apis =>
             new ApiResource[]
             {
-                new ApiResource("api1", "My API #1")
+                new ApiResource("api1", "My API #1"),
             };
 
 
@@ -43,7 +44,7 @@ namespace IdentityServer
                     ClientName = "Client Credentials Client",
 
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
+                    ClientSecrets = { new Secret("secret".Sha256()) },
 
                     AllowedScopes = { "api1" }
                 },
@@ -77,6 +78,8 @@ namespace IdentityServer
                     RequirePkce = true,
                     RequireClientSecret = false,
                     AllowAccessTokensViaBrowser = true,
+                    AlwaysSendClientClaims=true,
+                    AlwaysIncludeUserClaimsInIdToken=true,
 
                     RedirectUris =
                     {

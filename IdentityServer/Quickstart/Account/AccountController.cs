@@ -95,30 +95,32 @@ namespace IdentityServer4.Quickstart.UI
                         new Claim(JwtClaimTypes.GivenName, model.FirstName),
                         new Claim(JwtClaimTypes.FamilyName, model.LastName),
                         new Claim(JwtClaimTypes.Email, model.Email),
-                        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean)
+                        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+                        new Claim(JwtClaimTypes.Role,model.Roles[0])
                         });
 
                     if (resultClaims.Succeeded)
                     {
-                        foreach (var role in model.Roles)
-                        {
-                            if (await _roleManager.RoleExistsAsync(role))
-                            {
-                                var resultRole = await _userManager.AddToRoleAsync(user, role);
-                                if (!result.Succeeded)
-                                {
-                                    errors.AddRange(resultRole.Errors);
-                                }
-                            }
-                            else
-                            {
-                                var error = new IdentityError();
-                                error.Code = "404";
-                                error.Description = $"Role {role} not found";
-                                errors.Add(error);
-                                break;
-                            }
-                        }
+                        //foreach (var role in model.Roles)
+                        //{
+                        //    if (await _roleManager.RoleExistsAsync(role))
+                        //    {
+                        //        var resultRole = await _userManager.AddToRoleAsync(user, role);
+                        //        if (!result.Succeeded)
+                        //        {
+                        //            errors.AddRange(resultRole.Errors);
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        var error = new IdentityError();
+                        //        error.Code = "404";
+                        //        error.Description = $"Role {role} not found";
+                        //        errors.Add(error);
+                        //        break;
+                        //    }
+                        //}
+
                         if (errors.Count == 0)
                         {
                             return Ok(password);

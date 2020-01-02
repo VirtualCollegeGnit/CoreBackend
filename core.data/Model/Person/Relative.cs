@@ -23,6 +23,7 @@
         }
 
         public int ID { get; set; }
-        public Relation Relation { get; set; }
+        public virtual Relation Relation { get; set; }
+        public virtual Person? Person { get; set; }
     }
 }

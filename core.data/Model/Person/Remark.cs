@@ -12,8 +12,8 @@ namespace core.data.Model.Person
         }
 
         public int ID { get; set; }
-        public Person Person { get; set; }
-        public Member.Member GivenBy { get; set; }
+        public virtual Person? Person { get; set; }
+        public virtual Member.Member? GivenBy { get; set; }
         public int Rating { get; set; }
         public string Description { get; set; }
         public DateTime DateTime { get; set; }

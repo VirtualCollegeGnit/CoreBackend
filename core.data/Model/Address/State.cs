@@ -4,13 +4,13 @@ namespace core.data.Model.Address
 {
     public class State
     {
-        public State(int name)
+        public State(string name)
         {
             Name = name;
         }
 
         public int ID { get; set; }
-        public int Name { get; set; }
-        public ICollection<Person.Person>? People { get; set; }
+        public string Name { get; set; }
+        public virtual ICollection<Person.Person>? People { get; set; }
     }
 }

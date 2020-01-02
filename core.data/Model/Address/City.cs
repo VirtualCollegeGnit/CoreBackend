@@ -9,6 +9,6 @@
 
         public int ID { get; set; }
         public string Name { get; set; }
-        public District? District { get; set; }
+        public virtual District? District { get; set; }
     }
 }

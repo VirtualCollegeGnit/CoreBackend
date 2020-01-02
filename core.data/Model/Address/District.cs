@@ -9,6 +9,6 @@
 
         public int ID { get; set; }
         public string Name { get; set; }
-        public State? State { get; set; }
+        public virtual State? State { get; set; }
     }
 }

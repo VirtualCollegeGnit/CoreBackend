@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace core.data.Model.Person
@@ -16,9 +18,15 @@ namespace core.data.Model.Person
         public string FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
-        public Contact? Contact { get; set; }
-        public ICollection<Remark>? Remarks { get; set; }
+        public Gender Gender { get; set; }
+        public DateTime? DateOfBirth{ get; set; }
+        public virtual Contact? Contact { get; set; }
+        public virtual ICollection<Remark>? Remarks { get; set; }
         public int? MemberId { get; set; }
-        public Member.Member? Member { get; set; }
+        public virtual Member.Member? Member { get; set; }
+    }
+    public enum Gender
+    {
+        Male,Female,Transgender
     }
 }

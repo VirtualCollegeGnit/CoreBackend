@@ -15,10 +15,10 @@ namespace core.data.Model.Member
         }
 
         public int ID { get; set; }
-        public Person.Person? Person { get; set; }
+        public virtual Person.Person? Person { get; set; }
         public bool isActive { get; set; }
         public DateTime DateOfJoining { get; set; }
         public DateTime? DateOfLeaving { get; set; }
-        public List<Document>? Documents { get; set; }
+        public virtual List<Document>? Documents { get; set; }
     }
 }

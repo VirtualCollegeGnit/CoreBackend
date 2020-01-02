@@ -3,6 +3,6 @@
     public class Admin
     {
         public int Id { get; set; }
-        public Member? Member { get; set; }
+        public virtual Member? Member { get; set; }
     }
 }

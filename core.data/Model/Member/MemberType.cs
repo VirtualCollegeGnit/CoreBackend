@@ -13,6 +13,6 @@ namespace core.data.Model.Member
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Member>? Members { get; set; }
+        public virtual ICollection<Member>? Members { get; set; }
     }
 }

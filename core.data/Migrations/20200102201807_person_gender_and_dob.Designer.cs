@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using core.data;
 
 namespace core.data.Migrations
 {
     [DbContext(typeof(VirtualCollegeContext))]
-    partial class VirtualCollegeContextModelSnapshot : ModelSnapshot
+    [Migration("20200102201807_person_gender_and_dob")]
+    partial class person_gender_and_dob
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

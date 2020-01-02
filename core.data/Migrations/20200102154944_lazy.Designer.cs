@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using core.data;
 
 namespace core.data.Migrations
 {
     [DbContext(typeof(VirtualCollegeContext))]
-    partial class VirtualCollegeContextModelSnapshot : ModelSnapshot
+    [Migration("20200102154944_lazy")]
+    partial class lazy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,9 +117,8 @@ namespace core.data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Name")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -341,15 +342,9 @@ namespace core.data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -389,17 +384,12 @@ namespace core.data.Migrations
                     b.Property<int?>("ContactID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PersonID")
-                        .HasColumnType("int");
-
                     b.Property<int>("Relation")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
                     b.HasIndex("ContactID");
-
-                    b.HasIndex("PersonID");
 
                     b.ToTable("Relative");
                 });
@@ -548,10 +538,6 @@ namespace core.data.Migrations
                     b.HasOne("core.data.Model.Person.Contact", null)
                         .WithMany("Relatives")
                         .HasForeignKey("ContactID");
-
-                    b.HasOne("core.data.Model.Person.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonID");
                 });
 
             modelBuilder.Entity("core.data.Model.Person.Remark", b =>

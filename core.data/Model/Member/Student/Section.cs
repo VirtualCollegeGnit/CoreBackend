@@ -6,6 +6,6 @@ namespace core.data.Model.Member
     {
         public int Id { get; set; }
         public int Name { get; set; }
-        public ICollection<Student>? Students { get; set; }
+        public virtual ICollection<Student>? Students { get; set; }
     }
 }

@@ -13,12 +13,12 @@ namespace core.data.Model.Person
 
         public int ID { get; set; }
         public int PersonId { get; set; }
-        public Person? Person { get; set; }
+        public virtual Person? Person { get; set; }
         [Phone]
         public string Mobile { get; set; }
         [EmailAddress]
         public string? Email { get; set; }
-        public Address.Address? Address { get; set; }
-        public ICollection<Relative>? Relatives { get; set; }
+        public virtual Address.Address? Address { get; set; }
+        public virtual ICollection<Relative>? Relatives { get; set; }
     }
 }

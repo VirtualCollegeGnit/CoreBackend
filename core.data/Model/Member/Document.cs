@@ -16,10 +16,10 @@ namespace core.data.Model.Member
         public int ID { get; set; }
         public bool IsMedia { get; set; }
         public bool IsAccepted { get; set; }
-        public Admin? AcceptedBy { get; set; }
+        public virtual Admin? AcceptedBy { get; set; }
         public DateTime DateTime { get; set; }
         public string Data { get; set; }
         public string DocumentType { get; set; }
-        public Member? Member { get; set; }
+        public virtual Member? Member { get; set; }
     }
 }
