@@ -20,5 +20,7 @@ namespace core.data.Model.Person
         public string? Email { get; set; }
         public virtual Address.Address? Address { get; set; }
         public virtual ICollection<Relative>? Relatives { get; set; }
+        [Timestamp]
+        public byte[]? RowVersion { get; set; }
     }
 }

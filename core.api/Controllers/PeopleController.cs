@@ -26,7 +26,7 @@ namespace core.api.Controllers
         [EnableQuery()]
         public async Task<ActionResult<IEnumerable<PersonModel>>> GetPeople()
         {
-            return await personSupervisor.GetPeopleBasicAsync();
+            return await personSupervisor.GetPeopleAsync();
         }
 
         [HttpGet]

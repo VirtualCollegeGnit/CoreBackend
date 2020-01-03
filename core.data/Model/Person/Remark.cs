@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace core.data.Model.Person
 {
@@ -17,5 +18,7 @@ namespace core.data.Model.Person
         public int Rating { get; set; }
         public string Description { get; set; }
         public DateTime DateTime { get; set; }
+        [Timestamp]
+        public byte[]? RowVersion { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace core.data.Model.Address
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace core.data.Model.Address
 {
     public class Address
     {
@@ -14,5 +16,7 @@
         public string? AddressLine2 { get; set; }
         public string? AddressLine3 { get; set; }
         public virtual PinCode? PinCode { get; set; }
+        [Timestamp]
+        public byte[]? RowVersion { get; set; }
     }
 }

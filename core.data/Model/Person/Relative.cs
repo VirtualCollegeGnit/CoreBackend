@@ -1,4 +1,6 @@
-﻿namespace core.data.Model.Person
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace core.data.Model.Person
 {
     public enum Relation
     {
@@ -25,5 +27,7 @@
         public int ID { get; set; }
         public virtual Relation Relation { get; set; }
         public virtual Person? Person { get; set; }
+        [Timestamp]
+        public byte[]? RowVersion { get; set; }
     }
 }

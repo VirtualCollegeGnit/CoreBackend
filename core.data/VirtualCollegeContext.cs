@@ -13,10 +13,6 @@ namespace core.data
         public VirtualCollegeContext(DbContextOptions<VirtualCollegeContext> options) : base(options)
         {
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseLazyLoadingProxies();
-        }
 
         public DbSet<Member>? Members { get; set; }
         public DbSet<Person>? People { get; set; }

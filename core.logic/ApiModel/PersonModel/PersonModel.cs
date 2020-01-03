@@ -1,7 +1,9 @@
 ﻿using core.data.Model.Address;
 using core.data.Model.Person;
+using core.logic.Supervisor;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -9,24 +11,12 @@ namespace core.logic.ApiModel.PersonModel
 {
     public class PersonModel
     {
-        internal readonly Person? rawPerson;
+        internal readonly Person? person;
 
-        public PersonModel(Person rawPerson)
-        {
-            Id = rawPerson.ID;
-            FirstName = rawPerson.FirstName;
-            MiddleName = rawPerson.MiddleName;
-            LastName = rawPerson.LastName;
-            Gender = rawPerson.Gender;
-            DateOfBirth = rawPerson.DateOfBirth;
-            Email = rawPerson.Contact?.Email;
-            Mobile = rawPerson.Contact?.Mobile;
-            this.rawPerson = rawPerson;
-        }
-
-        public PersonModel()
+        public PersonModel(Person? person = null)
         {
             FirstName = "";
+            this.person = person;
         }
 
         public int Id { get; set; }
@@ -35,22 +25,22 @@ namespace core.logic.ApiModel.PersonModel
         public string? LastName { get; set; }
         public Gender Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        [EmailAddress]
         public string? Email { get; set; }
         public string? Mobile { get; set; }
+
+        internal PersonSupervisor? supervisor;
+        internal Person? rawPerson;
 
         private AddressModel? address;
         public AddressModel? Address
         {
             get
             {
-                if (address != null)
-                {
-                    return address;
-                }
-                if (rawPerson != null)
+                if (address == null && person != null)
                 {
                     Console.WriteLine("\n\n\nFetching address");
-                    address = new AddressModel(rawPerson);
+                    address = supervisor?.GetAddressModel(rawPerson);
                 }
                 return address;
             }
@@ -67,37 +57,29 @@ namespace core.logic.ApiModel.PersonModel
             {
                 if (relatives == null)
                 {
-                    var rawRelatives = rawPerson?.Contact?.Relatives.ToList();
-                    relatives = new List<RelativeModel>();
-                    rawRelatives?.ForEach(x =>
-                    {
-                        if (x.Person != null)
-                        {
-                            relatives.Add(new RelativeModel(x));
-                        }
-                    });
+                    relatives = supervisor?.GetRelatives(rawPerson);
                 }
                 return relatives;
             }
             set { relatives = value; }
         }
 
-    }
+        private List<RemarkModel>? remarks;
 
-    public class RelativeModel
-    {
-        public RelativeModel(Relative x)
+        public List<RemarkModel>? Remarks
         {
-            if (x.Person == null)
+            get
             {
-                throw new NullReferenceException("Relative person cannot be null");
+                if (remarks == null)
+                {
+                    remarks = supervisor?.GetRemarksModel(rawPerson);
+                }
+                return remarks;
             }
-            Relation = x.Relation;
-            Person = new PersonModel(x.Person);
+            set { remarks = value; }
         }
 
-        public int Id { get; set; }
-        public Relation Relation { get; set; }
-        public PersonModel Person { get; set; }
+
+        public byte[]? RowVersion { get; internal set; }
     }
 }

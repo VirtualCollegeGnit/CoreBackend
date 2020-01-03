@@ -24,6 +24,8 @@ namespace core.data.Model.Person
         public virtual ICollection<Remark>? Remarks { get; set; }
         public int? MemberId { get; set; }
         public virtual Member.Member? Member { get; set; }
+        [Timestamp]
+        public byte[]? RowVersion { get; set; }
     }
     public enum Gender
     {

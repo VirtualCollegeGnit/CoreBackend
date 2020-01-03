@@ -7,7 +7,7 @@ namespace core.logic.Supervisor
 {
     public abstract class SupervisorBase
     {
-        protected readonly VirtualCollegeContext context;
+        protected internal readonly VirtualCollegeContext context;
 
         protected SupervisorBase(VirtualCollegeContext context)
         {

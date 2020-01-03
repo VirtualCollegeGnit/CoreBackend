@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "core.logic", "core.logic\co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "core.data", "core.data\core.data.csproj", "{1459A7DB-4AE1-4471-A4DF-0DB48931778B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiConsoleTest", "WebApiConsoleTest\WebApiConsoleTest.csproj", "{1F8E920D-D2A6-4EE4-9402-7966968E7D76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiConsoleTest", "WebApiConsoleTest\WebApiConsoleTest.csproj", "{1F8E920D-D2A6-4EE4-9402-7966968E7D76}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7E91D5A8-0BA1-4FA1-97E8-D9C83565C593}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
