@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace core.data.Migrations
 {
@@ -12,7 +13,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: false),
                     Semester = table.Column<int>(nullable: false),
                     Capacity = table.Column<int>(nullable: false)
@@ -27,7 +28,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     isActive = table.Column<bool>(nullable: false),
                     DateOfJoining = table.Column<DateTime>(nullable: false),
                     DateOfLeaving = table.Column<DateTime>(nullable: true)
@@ -42,7 +43,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -55,8 +56,8 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +69,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MemberID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -87,7 +88,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CourseId = table.Column<int>(nullable: true),
                     SectionId = table.Column<int>(nullable: true)
                 },
@@ -113,7 +114,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: false),
                     StateID = table.Column<int>(nullable: true)
                 },
@@ -133,7 +134,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     IsMedia = table.Column<bool>(nullable: false),
                     IsAccepted = table.Column<bool>(nullable: false),
                     AcceptedById = table.Column<int>(nullable: true),
@@ -164,7 +165,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     StudentDataId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -183,7 +184,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MemberID = table.Column<int>(nullable: true),
                     StudentDataId = table.Column<int>(nullable: true),
                     SectionId = table.Column<int>(nullable: true)
@@ -216,7 +217,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: false),
                     DistrictID = table.Column<int>(nullable: true)
                 },
@@ -236,7 +237,7 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Pincode = table.Column<int>(nullable: false),
                     CityID = table.Column<int>(nullable: true)
                 },
@@ -256,11 +257,12 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AddressLine1 = table.Column<string>(nullable: false),
                     AddressLine2 = table.Column<string>(nullable: true),
                     AddressLine3 = table.Column<string>(nullable: true),
-                    PinCodeID = table.Column<int>(nullable: true)
+                    PinCodeID = table.Column<int>(nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -278,11 +280,14 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(nullable: false),
                     MiddleName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
+                    Gender = table.Column<int>(nullable: false),
+                    DateOfBirth = table.Column<DateTime>(nullable: true),
                     MemberId = table.Column<int>(nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     PinCodeID = table.Column<int>(nullable: true),
                     StateID = table.Column<int>(nullable: true)
                 },
@@ -314,11 +319,12 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PersonId = table.Column<int>(nullable: false),
                     Mobile = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    AddressID = table.Column<int>(nullable: true)
+                    AddressID = table.Column<int>(nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -342,12 +348,13 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonID = table.Column<int>(nullable: false),
-                    GivenByID = table.Column<int>(nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PersonID = table.Column<int>(nullable: true),
+                    GivenByID = table.Column<int>(nullable: true),
                     Rating = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    DateTime = table.Column<DateTime>(nullable: false)
+                    DateTime = table.Column<DateTime>(nullable: false),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -357,13 +364,13 @@ namespace core.data.Migrations
                         column: x => x.GivenByID,
                         principalTable: "Members",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Remark_People_PersonID",
                         column: x => x.PersonID,
                         principalTable: "People",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -371,8 +378,10 @@ namespace core.data.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Relation = table.Column<int>(nullable: false),
+                    PersonID = table.Column<int>(nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     ContactID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -382,6 +391,12 @@ namespace core.data.Migrations
                         name: "FK_Relative_Contacts_ContactID",
                         column: x => x.ContactID,
                         principalTable: "Contacts",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Relative_People_PersonID",
+                        column: x => x.PersonID,
+                        principalTable: "People",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -431,8 +446,7 @@ namespace core.data.Migrations
                 name: "IX_People_MemberId",
                 table: "People",
                 column: "MemberId",
-                unique: true,
-                filter: "[MemberId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_People_PinCodeID",
@@ -453,6 +467,11 @@ namespace core.data.Migrations
                 name: "IX_Relative_ContactID",
                 table: "Relative",
                 column: "ContactID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Relative_PersonID",
+                table: "Relative",
+                column: "PersonID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Remark_GivenByID",
