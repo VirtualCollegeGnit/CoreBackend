@@ -31,7 +31,7 @@ namespace core.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(mvcOption=>mvcOption.EnableEndpointRouting=false);
+            services.AddControllers(mvcOption => mvcOption.EnableEndpointRouting = false);
 
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
@@ -49,8 +49,10 @@ namespace core.api
                 });
             });
 
+            //services.AddDbContext<VirtualCollegeContext>(options =>
+            //            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<VirtualCollegeContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("Postgres")));
 
             services.AddOData();
         }
