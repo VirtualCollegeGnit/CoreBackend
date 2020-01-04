@@ -93,6 +93,33 @@ namespace IdentityServer
                     AllowedCorsOrigins = { "http://localhost:8080" },
 
                     AllowedScopes = { "openid", "profile", "api1" }
+                },
+                // SPA client using code flow + pkce
+                new Client
+                {
+                    ClientId = "spa-prod",
+                    ClientName = "SPA Client Production",
+                    ClientUri = "https://virtualcollege.now.sh",
+
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+                    AllowAccessTokensViaBrowser = true,
+                    AlwaysSendClientClaims=true,
+                    AlwaysIncludeUserClaimsInIdToken=true,
+
+                    RedirectUris =
+                    {
+                        "https://virtualcollege.now.sh/index.html",
+                        "https://virtualcollege.now.sh/callback.html",
+                        "https://virtualcollege.now.sh/silent.html",
+                        "https://virtualcollege.now.sh/popup.html",
+                    },
+
+                    PostLogoutRedirectUris = { "https://virtualcollege.now.sh" },
+                    AllowedCorsOrigins = { "https://virtualcollege.now.sh" },
+
+                    AllowedScopes = { "openid", "profile", "api1" }
                 }
             };
     }
