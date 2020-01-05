@@ -9,9 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build IdentityServer --file IdentityServer/Dockerfile.heroku --tag virtualcollege-identity:$(date +%s)
+      run: docker build IdentityServer --file IdentityServer/Dockerfile.heroku -t virtualcollege-identity:$(date +%s)
     
     - name: See docker images
       run: docker images
