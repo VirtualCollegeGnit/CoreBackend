@@ -1,0 +1,31 @@
+name: CoreBackendIdentity-heroku-deploy
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build .\CoreBackend\ --file Dockerfile.heroku --tag virtualcollege-identity:$(date +%s)
+      
+    - uses: actions/heroku@1.0.0
+    - name: GitHub Action for Heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      with:
+        args: container:push -a virtualcollege-identity web
+    - name: Heroku release
+      uses: actions/heroku@1.0.0
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      with:
+        args: container:release -a virtualcollege-identity web
+      
