@@ -1,0 +1,32 @@
+name: CoreBackendIdentity-heroku-deploy
+
+on:
+  push:
+    branches: 
+    - master
+    paths:
+      - 'IdentityServer/**'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.0.0
+    - name: Build the Docker image
+      run: docker build IdentityServer --file IdentityServer/Dockerfile.heroku -t virtualcollege-identity
+    
+    - name: See docker images
+      run: docker images
+    
+    - name: Push to heroku
+      run: |
+        docker login --username=ankur.nigam198@gmail.com --password=$HEROKU_API_KEY registry.heroku.com
+        docker tag virtualcollege-identity registry.heroku.com/virtualcollege-identity/web
+        docker push registry.heroku.com/virtualcollege-identity/web
+        heroku container:release web -a virtualcollege-identity
+        
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
