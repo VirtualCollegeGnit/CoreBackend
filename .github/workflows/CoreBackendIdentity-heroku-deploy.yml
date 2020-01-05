@@ -13,14 +13,15 @@ jobs:
     - name: Build the Docker image
       run: docker build .\CoreBackend\ --file Dockerfile.heroku --tag virtualcollege-identity:$(date +%s)
       
-    - uses: actions/heroku@1.0.0
     - name: Heroku Login
+      uses: actions/heroku@1.0.0
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       with:
         args: container:login
     
     - name: Push
+      uses: actions/heroku@1.0.0
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       with:
