@@ -1,9 +1,6 @@
 name: CoreBackendIdentity-heroku-deploy
 
-on:
-  push:
-    branches:
-    - master
+on: push
 
 jobs:
 
@@ -17,11 +14,18 @@ jobs:
       run: docker build .\CoreBackend\ --file Dockerfile.heroku --tag virtualcollege-identity:$(date +%s)
       
     - uses: actions/heroku@1.0.0
-    - name: GitHub Action for Heroku
+    - name: Heroku Login
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      with:
+        args: container:login
+    
+    - name: Push
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       with:
         args: container:push -a virtualcollege-identity web
+    
     - name: Heroku release
       uses: actions/heroku@1.0.0
       env:
