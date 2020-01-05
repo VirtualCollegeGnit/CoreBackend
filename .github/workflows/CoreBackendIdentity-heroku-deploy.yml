@@ -24,7 +24,7 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@2.11
       with:
         # The name of the image you would like to push
-        name: virtualcollege-identity:$(date +%s)
+        name: virtualcollege-identity
         # The login username for the registry
         username: ankur.nigam198@gmail.com
         # The login password for the registry
