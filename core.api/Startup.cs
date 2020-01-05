@@ -36,7 +36,8 @@ namespace core.api
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "http://localhost:5000";
+                    //options.Authority = "http://localhost:5000";
+                    options.Authority = "https://virtualcollege-identity.herokuapp.com/";
                     options.RequireHttpsMetadata = false;
                     options.Audience = "api1";
                 });

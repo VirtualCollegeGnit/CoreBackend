@@ -13,6 +13,11 @@ namespace core.logic.ApiModel.PersonModel
     {
         internal readonly Person? person;
 
+        public PersonModel() : this(null)
+        {
+
+        }
+
         public PersonModel(Person? person = null)
         {
             FirstName = "";
