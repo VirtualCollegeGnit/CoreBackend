@@ -19,13 +19,30 @@ jobs:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       with:
         args: container:login
-    
-    - name: Push
-      uses: actions/heroku@1.0.0
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        
+    - name: Publish Docker
+      uses: elgohr/Publish-Docker-Github-Action@2.11
       with:
-        args: container:push -a virtualcollege-identity web
+        # The name of the image you would like to push
+        name: virtualcollege-identity:$(date +%s)
+        # The login username for the registry
+        username: ankur.nigam198@gmail.com
+        # The login password for the registry
+        password: ${{ secrets.HEROKU_API_KEY }}
+        # Use registry for pushing to a custom registry
+        registry: registry.heroku.com/virtualcollege-identity/web
+        # Use dockerfile when you would like to explicitly build a Dockerfile
+        dockerfile: Dockerfile.heroku
+        # Use workdir when you would like to change the directory for building
+        workdir: IdentityServer
+    
+#     - name: Push
+#       uses: actions/heroku@1.0.0
+#       working-directory: ./IdentityServer
+#       env:
+#         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+#       with:
+#         args: container:push -a virtualcollege-identity web
     
     - name: Heroku release
       uses: actions/heroku@1.0.0
