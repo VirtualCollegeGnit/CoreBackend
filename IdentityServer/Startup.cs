@@ -6,6 +6,7 @@ using IdentityServer.Data;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,16 @@ namespace IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // https on heroku docker - https://jincod.github.io/2018/11/17/ensure-https-for-aspnetcore-on-heroku/
+            services.AddHttpsRedirection(options => { options.HttpsPort = 443; });
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
+
             services.AddControllersWithViews();
 
             // configures IIS out-of-proc settings (see https://github.com/aspnet/AspNetCore/issues/14882)
@@ -94,6 +105,12 @@ namespace IdentityServer
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+            }
+            if (Environment.IsProduction())
+            {
+                app
+                    .UseForwardedHeaders()
+                    .UseHttpsRedirection();
             }
 
             app.UseStaticFiles();
