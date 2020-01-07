@@ -68,7 +68,7 @@ namespace core.api
                 var connectionString = Environment.GetEnvironmentVariable("HEROKU_POSTGRES");
                 if (connectionString != null)
                 {
-                    options.UseNpgsql(Configuration.GetConnectionString(connectionString));
+                    options.UseNpgsql(connectionString);
                 }
                 else throw new Exception("Database variable not set");
             });
