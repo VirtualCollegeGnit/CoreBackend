@@ -1,0 +1,30 @@
+name: CoreBackend-heroku-deploy
+
+on:
+  push:
+    branches: 
+    - master
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.0.0
+    - name: Build the Docker image
+      run: docker build . -t virtualcollege-corebackend
+    
+    - name: See docker images
+      run: docker images
+    
+    - name: Push to heroku
+      run: |
+        docker login --username=ankur.nigam198@gmail.com --password=$HEROKU_API_KEY registry.heroku.com
+        docker tag virtualcollege-corebackend registry.heroku.com/virtualcollege-corebackend/web
+        docker push registry.heroku.com/virtualcollege-corebackend/web
+        heroku container:release web -a virtualcollege-corebackend
+        
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
