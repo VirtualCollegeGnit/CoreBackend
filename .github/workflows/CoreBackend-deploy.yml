@@ -1,4 +1,4 @@
-name: CoreBackendIdentity-heroku-deploy
+name: CoreBackend-heroku-deploy
 
 on:
   push:
