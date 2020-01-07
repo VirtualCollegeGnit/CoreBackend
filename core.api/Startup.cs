@@ -8,6 +8,7 @@ using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,16 @@ namespace core.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // https on heroku docker - https://jincod.github.io/2018/11/17/ensure-https-for-aspnetcore-on-heroku/
+            services.AddHttpsRedirection(options => { options.HttpsPort = 443; });
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
+
             services.AddControllers(mvcOption => mvcOption.EnableEndpointRouting = false);
 
             services.AddAuthentication("Bearer")
@@ -73,9 +84,14 @@ namespace core.api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors();
+            if (env.IsProduction())
+            {
+                app
+                    .UseForwardedHeaders()
+                    .UseHttpsRedirection();
+            }
 
-            app.UseHttpsRedirection();
+            app.UseCors();
 
             app.UseRouting();
 
