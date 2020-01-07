@@ -19,12 +19,17 @@
     },
     "core.api": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "api/People",
       "environmentVariables": {
+        "HEROKU_POSTGRES": "User ID=lgzysapkicacku;Password=58a594bbed6430dcc3599c5e7ad3a0a81cea46bc5f4bc772475fa411be0071ff;Host=ec2-174-129-33-147.compute-1.amazonaws.com;Port=5432;Database=dffq5n0jsjehrk;SslMode=Require;TrustServerCertificate=true",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5001"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/People",
+      "publishAllPorts": true
     }
   }
 }

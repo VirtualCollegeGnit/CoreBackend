@@ -53,7 +53,14 @@ namespace core.api
             //services.AddDbContext<VirtualCollegeContext>(options =>
             //            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<VirtualCollegeContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("Postgres")));
+            {
+                var connectionString = Environment.GetEnvironmentVariable("HEROKU_POSTGRES");
+                if (connectionString != null)
+                {
+                    options.UseNpgsql(Configuration.GetConnectionString(connectionString));
+                }
+                else throw new Exception("Database variable not set");
+            });
 
             services.AddOData();
         }
