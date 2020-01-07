@@ -22,7 +22,7 @@ namespace core.api.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "administrator")]
+        [Authorize(Roles = "administrator")]
         [EnableQuery()]
         public async Task<ActionResult<IEnumerable<PersonModel>>> GetPeople()
         {
