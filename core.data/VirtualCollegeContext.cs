@@ -12,12 +12,21 @@ namespace core.data
     {
         public VirtualCollegeContext(DbContextOptions<VirtualCollegeContext> options) : base(options)
         {
+
         }
 
         public DbSet<Member>? Members { get; set; }
         public DbSet<Person>? People { get; set; }
-        public DbSet<Student>? Students { get; set; }
+        //public DbSet<Student>? Students { get; set; }
         public DbSet<Contact>? Contacts { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer("Data Source=localhost;Initial Catalog=VirtualCollege;Persist Security Info=True;User ID=sa;Password=12.LmnbA");
+            var x = (Environment.GetEnvironmentVariable("HEROKU_POSTGRES"));
+            Console.WriteLine(x);
+        }
     }
 }

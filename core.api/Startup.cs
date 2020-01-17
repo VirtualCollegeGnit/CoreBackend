@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using core.data;
 using core.logic.ApiModel.PersonModel;
 using Microsoft.AspNet.OData.Builder;
@@ -9,13 +6,9 @@ using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OData.Edm;
 
 namespace core.api
@@ -62,17 +55,16 @@ namespace core.api
                 });
             });
 
+            services.AddDbContext<VirtualCollegeContext>();
             //services.AddDbContext<VirtualCollegeContext>(options =>
-            //            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<VirtualCollegeContext>(options =>
-            {
-                var connectionString = Environment.GetEnvironmentVariable("HEROKU_POSTGRES");
-                if (connectionString != null)
-                {
-                    options.UseNpgsql(connectionString);
-                }
-                else throw new Exception("Database variable not set");
-            });
+            //{
+            //    var connectionString = Environment.GetEnvironmentVariable("HEROKU_POSTGRES");
+            //    if (connectionString != null)
+            //    {
+            //        options.UseNpgsql(connectionString);
+            //    }
+            //    else throw new Exception("Database variable not set");
+            //});
 
             services.AddOData();
         }

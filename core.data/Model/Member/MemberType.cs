@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace core.data.Model.Member
 {
     public class MemberType
     {
-        public MemberType(string name, string description)
-        {
-            Name = name;
-            Description = description;
-        }
-
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public virtual ICollection<Member>? Members { get; set; }
+        [MaxLength(20)]
+        public string Name { get; set; } = "";
+        [MaxLength(20)]
+        public string Description { get; set; } = "";
+        public virtual List<Member> Members { get; set; } = new List<Member>();
     }
 }

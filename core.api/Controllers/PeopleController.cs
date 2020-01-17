@@ -16,10 +16,12 @@ namespace core.api.Controllers
     public class PeopleController : ControllerBase
     {
         private readonly PersonSupervisor personSupervisor;
+        private readonly VirtualCollegeContext context;
 
         public PeopleController(VirtualCollegeContext _context)
         {
             personSupervisor = new PersonSupervisor(_context);
+            context = _context;
         }
 
         [HttpGet]

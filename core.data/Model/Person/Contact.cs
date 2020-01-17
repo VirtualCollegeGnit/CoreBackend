@@ -5,21 +5,16 @@ namespace core.data.Model.Person
 {
     public class Contact
     {
-        public Contact(string mobile, string? email)
-        {
-            Mobile = mobile;
-            Email = email;
-        }
-
         public int ID { get; set; }
         public int PersonId { get; set; }
-        public virtual Person? Person { get; set; }
         [Phone]
-        public string Mobile { get; set; }
+        [MaxLength(10)]
+        public string Mobile { get; set; } = "";
         [EmailAddress]
+        [MaxLength(50)]
         public string? Email { get; set; }
         public virtual Address.Address? Address { get; set; }
-        public virtual ICollection<Relative>? Relatives { get; set; }
+        public virtual List<Relative>? Relatives { get; set; } = new List<Relative>();
         [Timestamp]
         public byte[]? RowVersion { get; set; }
     }

@@ -1,25 +1,19 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace core.data.Model.Member
 {
     public class Document
     {
-        public Document(bool isMedia, bool isAccepted, DateTime dateTime, string data, string documentType)
-        {
-            IsMedia = isMedia;
-            IsAccepted = isAccepted;
-            DateTime = dateTime;
-            Data = data;
-            DocumentType = documentType;
-        }
-
         public int ID { get; set; }
-        public bool IsMedia { get; set; }
-        public bool IsAccepted { get; set; }
+        public bool IsMedia { get; set; } = false;
+        public bool IsAccepted { get; set; } = false;
         public virtual Admin? AcceptedBy { get; set; }
+        [DataType(DataType.Date)]
         public DateTime DateTime { get; set; }
-        public string Data { get; set; }
-        public string DocumentType { get; set; }
-        public virtual Member? Member { get; set; }
+        [MaxLength(250)]
+        public string Data { get; set; } = "";
+        [MaxLength(20)]
+        public string DocumentType { get; set; } = "";
     }
 }

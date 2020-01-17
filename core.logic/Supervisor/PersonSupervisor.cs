@@ -164,14 +164,23 @@ namespace core.logic.Supervisor
 
         public async Task CreatePersonAsync(PersonModel personModel)
         {
-            var p = new Person(personModel.FirstName, personModel.MiddleName, personModel.LastName);
-            p.DateOfBirth = personModel.DateOfBirth;
-            p.Gender = personModel.Gender;
+            var p = new Person()
+            {
+                FirstName = personModel.FirstName,
+                MiddleName = personModel.MiddleName,
+                LastName = personModel.LastName,
+                DateOfBirth = personModel.DateOfBirth,
+                Gender = personModel.Gender
+            };
             context.Add(p);
             await context.SaveChangesAsync();
             if (personModel.Mobile != null)
             {
-                var c = new Contact(personModel.Mobile, personModel.Email);
+                var c = new Contact()
+                {
+                    Mobile = personModel.Mobile,
+                    Email = personModel.Email
+                };
                 context.Add(c);
                 p.Contact = c;
                 await context.SaveChangesAsync();

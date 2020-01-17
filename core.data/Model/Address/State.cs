@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace core.data.Model.Address
 {
@@ -10,7 +11,7 @@ namespace core.data.Model.Address
         }
 
         public int ID { get; set; }
+        [MaxLength(50)]
         public string Name { get; set; }
-        public virtual ICollection<Person.Person>? People { get; set; }
     }
 }
