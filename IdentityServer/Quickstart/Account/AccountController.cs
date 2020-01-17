@@ -55,14 +55,14 @@ namespace IdentityServer4.Quickstart.UI
             _events = events;
         }
 
-        /// <summary>
-        /// See roles available
-        /// </summary>
-        [HttpGet]
-        public IActionResult Roles()
-        {
-            return Ok(Config.Roles.Select(s => s.Name));
-        }
+        ///// <summary>
+        ///// See roles available
+        ///// </summary>
+        //[HttpGet]
+        //public IActionResult Roles()
+        //{
+        //    return Ok(Config.Roles.Select(s => s.Name));
+        //}
 
         /// <summary>
         /// Adding new user into system

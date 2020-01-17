@@ -11,13 +11,13 @@ namespace IdentityServer
 {
     public static class Config
     {
-        public static IEnumerable<IdentityRole> Roles =>
-            new IdentityRole[]
-            {
-                new IdentityRole("student"),
-                new IdentityRole("administrator"),
-                new IdentityRole("teacher")
-            };
+        //public static IEnumerable<IdentityRole> Roles =>
+        //    new IdentityRole[]
+        //    {
+        //        new IdentityRole("student"),
+        //        new IdentityRole("administrator"),
+        //        new IdentityRole("teacher")
+        //    };
 
         public static IEnumerable<IdentityResource> Ids =>
             new IdentityResource[]
