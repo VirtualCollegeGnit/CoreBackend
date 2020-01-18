@@ -74,17 +74,8 @@ namespace IdentityServer4.Quickstart.UI
 
             if (ModelState.IsValid)
             {
-                string GeneratePassword(int lenght)
-                {
-                    var random = new Random();
-                    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_";
-                    return new string(Enumerable.Repeat(chars, lenght)
-                        .Select(s => s[random.Next(s.Length)]).ToArray());
-                }
-
-
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = true };
-                var password = GeneratePassword(8);
+                var password = model.Password;
                 var result = await _userManager.CreateAsync(user, password);
                 var errors = new List<IdentityError>();
 
@@ -96,31 +87,10 @@ namespace IdentityServer4.Quickstart.UI
                         new Claim(JwtClaimTypes.FamilyName, model.LastName),
                         new Claim(JwtClaimTypes.Email, model.Email),
                         new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                        new Claim(JwtClaimTypes.Role,model.Roles[0])
                         });
 
                     if (resultClaims.Succeeded)
                     {
-                        //foreach (var role in model.Roles)
-                        //{
-                        //    if (await _roleManager.RoleExistsAsync(role))
-                        //    {
-                        //        var resultRole = await _userManager.AddToRoleAsync(user, role);
-                        //        if (!result.Succeeded)
-                        //        {
-                        //            errors.AddRange(resultRole.Errors);
-                        //        }
-                        //    }
-                        //    else
-                        //    {
-                        //        var error = new IdentityError();
-                        //        error.Code = "404";
-                        //        error.Description = $"Role {role} not found";
-                        //        errors.Add(error);
-                        //        break;
-                        //    }
-                        //}
-
                         if (errors.Count == 0)
                         {
                             return Ok(password);
@@ -237,7 +207,7 @@ namespace IdentityServer4.Quickstart.UI
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId:context?.ClientId));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.ClientId));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -246,7 +216,7 @@ namespace IdentityServer4.Quickstart.UI
             return View(vm);
         }
 
-        
+
         /// <summary>
         /// Show logout page
         /// </summary>
