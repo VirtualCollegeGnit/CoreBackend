@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace core.data.Migrations
 {
-    public partial class initialPersonAndMembers : Migration
+    public partial class newPermiss : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "MemberType",
+                name: "Role",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -18,7 +18,7 @@ namespace core.data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MemberType", x => x.ID);
+                    table.PrimaryKey("PK_Role", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,6 +32,33 @@ namespace core.data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_State", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Permission",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PermissionName = table.Column<int>(nullable: false),
+                    RoleID = table.Column<int>(nullable: true),
+                    RoleID1 = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permission", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Permission_Role_RoleID",
+                        column: x => x.RoleID,
+                        principalTable: "Role",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Permission_Role_RoleID1",
+                        column: x => x.RoleID1,
+                        principalTable: "Role",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,18 +207,11 @@ namespace core.data.Migrations
                     PersonID = table.Column<int>(nullable: false),
                     isActive = table.Column<bool>(nullable: false),
                     DateOfJoining = table.Column<DateTime>(nullable: false),
-                    DateOfLeaving = table.Column<DateTime>(nullable: true),
-                    MemberTypeID = table.Column<int>(nullable: false)
+                    DateOfLeaving = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Members", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Members_MemberType_MemberTypeID",
-                        column: x => x.MemberTypeID,
-                        principalTable: "MemberType",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Members_People_PersonID",
                         column: x => x.PersonID,
@@ -243,6 +263,30 @@ namespace core.data.Migrations
                         name: "FK_Admin_Members_MemberID",
                         column: x => x.MemberID,
                         principalTable: "Members",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MemberRole",
+                columns: table => new
+                {
+                    MemberId = table.Column<int>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MemberRole", x => new { x.MemberId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_MemberRole_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MemberRole_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -350,9 +394,9 @@ namespace core.data.Migrations
                 column: "MemberID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Members_MemberTypeID",
-                table: "Members",
-                column: "MemberTypeID");
+                name: "IX_MemberRole_RoleId",
+                table: "MemberRole",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Members_PersonID",
@@ -363,6 +407,16 @@ namespace core.data.Migrations
                 name: "IX_People_PinCodeID",
                 table: "People",
                 column: "PinCodeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permission_RoleID",
+                table: "Permission",
+                column: "RoleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permission_RoleID1",
+                table: "Permission",
+                column: "RoleID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PinCode_CityID",
@@ -396,6 +450,12 @@ namespace core.data.Migrations
                 name: "Document");
 
             migrationBuilder.DropTable(
+                name: "MemberRole");
+
+            migrationBuilder.DropTable(
+                name: "Permission");
+
+            migrationBuilder.DropTable(
                 name: "Relative");
 
             migrationBuilder.DropTable(
@@ -405,6 +465,9 @@ namespace core.data.Migrations
                 name: "Admin");
 
             migrationBuilder.DropTable(
+                name: "Role");
+
+            migrationBuilder.DropTable(
                 name: "Contacts");
 
             migrationBuilder.DropTable(
@@ -412,9 +475,6 @@ namespace core.data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Address");
-
-            migrationBuilder.DropTable(
-                name: "MemberType");
 
             migrationBuilder.DropTable(
                 name: "People");

@@ -7,6 +7,7 @@ namespace core.data.Model.Person
 {
     public class Person
     {
+        [Key]
         public int ID { get; set; }
         [MaxLength(20)]
         public string FirstName { get; set; } = "";

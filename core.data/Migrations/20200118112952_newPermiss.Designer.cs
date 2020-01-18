@@ -10,8 +10,8 @@ using core.data;
 namespace core.data.Migrations
 {
     [DbContext(typeof(VirtualCollegeContext))]
-    [Migration("20200117135306_initialPersonAndMembers")]
-    partial class initialPersonAndMembers
+    [Migration("20200118112952_newPermiss")]
+    partial class newPermiss
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -208,9 +208,6 @@ namespace core.data.Migrations
                     b.Property<DateTime?>("DateOfLeaving")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MemberTypeID")
-                        .HasColumnType("int");
-
                     b.Property<int>("PersonID")
                         .HasColumnType("int");
 
@@ -219,14 +216,52 @@ namespace core.data.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("MemberTypeID");
-
                     b.HasIndex("PersonID");
 
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("core.data.Model.Member.MemberType", b =>
+            modelBuilder.Entity("core.data.Model.Member.MemberRole", b =>
+                {
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MemberId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("MemberRole");
+                });
+
+            modelBuilder.Entity("core.data.Model.Member.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PermissionName")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoleID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoleID1")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleID");
+
+                    b.HasIndex("RoleID1");
+
+                    b.ToTable("Permission");
+                });
+
+            modelBuilder.Entity("core.data.Model.Member.Role", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -245,7 +280,7 @@ namespace core.data.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("MemberType");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("core.data.Model.Person.Contact", b =>
@@ -452,17 +487,37 @@ namespace core.data.Migrations
 
             modelBuilder.Entity("core.data.Model.Member.Member", b =>
                 {
-                    b.HasOne("core.data.Model.Member.MemberType", "MemberType")
-                        .WithMany("Members")
-                        .HasForeignKey("MemberTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("core.data.Model.Person.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("core.data.Model.Member.MemberRole", b =>
+                {
+                    b.HasOne("core.data.Model.Member.Member", "Member")
+                        .WithMany("MemberRole")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("core.data.Model.Member.Role", "Role")
+                        .WithMany("MemberRole")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("core.data.Model.Member.Permission", b =>
+                {
+                    b.HasOne("core.data.Model.Member.Role", null)
+                        .WithMany("AllowedPermissions")
+                        .HasForeignKey("RoleID");
+
+                    b.HasOne("core.data.Model.Member.Role", null)
+                        .WithMany("DeniedPermissions")
+                        .HasForeignKey("RoleID1");
                 });
 
             modelBuilder.Entity("core.data.Model.Person.Contact", b =>
