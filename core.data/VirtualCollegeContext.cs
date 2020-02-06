@@ -23,11 +23,12 @@ namespace core.data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
-                    .UseLazyLoadingProxies()
-                    .UseSqlServer("Data Source=localhost;Initial Catalog=VirtualCollege;Persist Security Info=True;User ID=sa;Password=12.LmnbA");
             var x = (Environment.GetEnvironmentVariable("HEROKU_POSTGRES"));
-            Console.WriteLine(x);
+            if (string.IsNullOrEmpty(x))
+            {
+                throw new Exception("Database variable not set");
+            }
+            optionsBuilder.UseLazyLoadingProxies().UseNpgsql(x);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -44,7 +44,7 @@ namespace core.api
                 {
                     options.Authority = Env.IsDevelopment() ? "http://localhost:5000" : "https://virtualcollege-identity.herokuapp.com/";
                     options.RequireHttpsMetadata = false;
-                    options.Audience = "api1";
+                    options.Audience = "basic_person_read basic_person_write";
                 });
 
             services.AddCors(options =>
@@ -56,15 +56,6 @@ namespace core.api
             });
 
             services.AddDbContext<VirtualCollegeContext>();
-            //services.AddDbContext<VirtualCollegeContext>(options =>
-            //{
-            //    var connectionString = Environment.GetEnvironmentVariable("HEROKU_POSTGRES");
-            //    if (connectionString != null)
-            //    {
-            //        options.UseNpgsql(connectionString);
-            //    }
-            //    else throw new Exception("Database variable not set");
-            //});
 
             services.AddOData();
         }
