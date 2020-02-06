@@ -30,7 +30,26 @@ namespace IdentityServer
         public static IEnumerable<ApiResource> Apis =>
             new ApiResource[]
             {
-                new ApiResource("api1", "My API #1"),
+                new ApiResource
+                {
+                    Name = "basic_person",
+                    DisplayName = "Basic person details",
+                    Description = "Name, gender, email, phone",
+
+                    Scopes =
+                    {
+                        new Scope
+                        {
+                            Name = "basic_person_read",
+                            DisplayName = "Read access to person details"
+                        },
+                        new Scope
+                        {
+                            Name = "basic_person_write",
+                            DisplayName = "Write access to person details"
+                        }
+                    }
+                }
             };
 
 
@@ -92,7 +111,7 @@ namespace IdentityServer
                     PostLogoutRedirectUris = { "http://localhost:8080" },
                     AllowedCorsOrigins = { "http://localhost:8080" },
 
-                    AllowedScopes = { "openid", "profile", "api1" }
+                    AllowedScopes = { "openid", "profile", "basic_person_read", "basic_person_write" }
                 },
                 // SPA client using code flow + pkce
                 new Client
@@ -119,7 +138,7 @@ namespace IdentityServer
                     PostLogoutRedirectUris = { "https://virtualcollege.now.sh" },
                     AllowedCorsOrigins = { "https://virtualcollege.now.sh" },
 
-                    AllowedScopes = { "openid", "profile", "api1" }
+                    AllowedScopes = { "openid", "profile", "basic_person_read", "basic_person_write" }
                 }
             };
     }
