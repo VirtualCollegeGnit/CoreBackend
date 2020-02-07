@@ -30,7 +30,26 @@ namespace IdentityServer
         public static IEnumerable<ApiResource> Apis =>
             new ApiResource[]
             {
-                new ApiResource("api1", "My API #1"),
+                new ApiResource
+                {
+                    Name = "basic_person",
+                    DisplayName = "Basic person details",
+                    Description = "Name, gender, email, phone",
+
+                    Scopes =
+                    {
+                        new Scope
+                        {
+                            Name = "basic_person_read",
+                            DisplayName = "Read access to person details"
+                        },
+                        new Scope
+                        {
+                            Name = "basic_person_write",
+                            DisplayName = "Write access to person details"
+                        }
+                    }
+                }
             };
 
 
@@ -71,7 +90,7 @@ namespace IdentityServer
                 new Client
                 {
                     ClientId = "spa",
-                    ClientName = "SPA Client",
+                    ClientName = "Core-Dev",
                     ClientUri = "http://identityserver.io",
 
                     AllowedGrantTypes = GrantTypes.Implicit,
@@ -92,13 +111,13 @@ namespace IdentityServer
                     PostLogoutRedirectUris = { "http://localhost:8080" },
                     AllowedCorsOrigins = { "http://localhost:8080" },
 
-                    AllowedScopes = { "openid", "profile", "api1" }
+                    AllowedScopes = { "openid", "profile", "basic_person_read", "basic_person_write" }
                 },
                 // SPA client using code flow + pkce
                 new Client
                 {
                     ClientId = "spa-prod",
-                    ClientName = "SPA Client Production",
+                    ClientName = "Virtual College Core",
                     ClientUri = "https://virtualcollege.now.sh",
 
                     AllowedGrantTypes = GrantTypes.Implicit,
@@ -119,8 +138,61 @@ namespace IdentityServer
                     PostLogoutRedirectUris = { "https://virtualcollege.now.sh" },
                     AllowedCorsOrigins = { "https://virtualcollege.now.sh" },
 
-                    AllowedScopes = { "openid", "profile", "api1" }
-                }
+                    AllowedScopes = { "openid", "profile", "basic_person_read", "basic_person_write" }
+                },
+
+                new Client
+                {
+                    ClientId = "techspa",
+                    ClientName = "TechClub - Dev ",
+                    ClientUri = "http://identityserver.io",
+
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+                    AllowAccessTokensViaBrowser = true,
+                    AlwaysSendClientClaims=true,
+                    AlwaysIncludeUserClaimsInIdToken=true,
+
+                    RedirectUris =
+                    {
+                        "http://localhost:8081/index.html",
+                        "http://localhost:8081/callback.html",
+                        "http://localhost:8081/silent.html",
+                        "http://localhost:8081/popup.html",
+                    },
+
+                    PostLogoutRedirectUris = { "http://localhost:8081" },
+                    AllowedCorsOrigins = { "http://localhost:8081" },
+
+                    AllowedScopes = { "openid", "profile", "basic_person_read" }
+                },
+                new Client
+                {
+                    ClientId = "techspa-prod",
+                    ClientName = "Tech Club",
+                    ClientUri = "http://identityserver.io",
+
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+                    AllowAccessTokensViaBrowser = true,
+                    AlwaysSendClientClaims=true,
+                    AlwaysIncludeUserClaimsInIdToken=true,
+
+                    RedirectUris =
+                    {
+                        "https://techclub.now.sh/index.html",
+                        "https://techclub.now.sh/callback.html",
+                        "https://techclub.now.sh/silent.html",
+                        "https://techclub.now.sh/popup.html",
+                    },
+
+                    PostLogoutRedirectUris = { "https://techclub.now.sh" },
+                    AllowedCorsOrigins = { "https://techclub.now.sh" },
+
+                    AllowedScopes = { "openid", "profile", "basic_person_read" }
+                },
             };
     }
 }

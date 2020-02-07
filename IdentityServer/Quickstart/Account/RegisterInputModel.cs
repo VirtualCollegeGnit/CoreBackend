@@ -14,12 +14,7 @@ namespace IdentityServer4.Quickstart.UI
         [Required]
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        [Phone]
         [Required]
-        public string Phone { get; set; }
-        public string ReturnUrl { get; set; }
-
-        [Required]
-        public string[] Roles { get; set; }
+        public string Password { get; set; }
     }
 }

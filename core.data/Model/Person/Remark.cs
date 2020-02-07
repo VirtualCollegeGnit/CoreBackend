@@ -13,10 +13,13 @@ namespace core.data.Model.Person
         }
 
         public int ID { get; set; }
-        public virtual Person? Person { get; set; }
+        [Required]
         public virtual Member.Member? GivenBy { get; set; }
+        [Range(0,10)]
         public int Rating { get; set; }
+        [MaxLength(250)]
         public string Description { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime DateTime { get; set; }
         [Timestamp]
         public byte[]? RowVersion { get; set; }

@@ -86,5 +86,6 @@ namespace core.logic.ApiModel.PersonModel
 
 
         public byte[]? RowVersion { get; internal set; }
+
     }
 }

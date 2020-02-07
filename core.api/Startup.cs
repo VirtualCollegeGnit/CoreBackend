@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using core.data;
 using core.logic.ApiModel.PersonModel;
 using Microsoft.AspNet.OData.Builder;
@@ -9,20 +7,16 @@ using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OData.Edm;
 
 namespace core.api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration ,IWebHostEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             Env = env;
@@ -51,7 +45,17 @@ namespace core.api
                 {
                     options.Authority = Env.IsDevelopment() ? "http://localhost:5000" : "https://virtualcollege-identity.herokuapp.com/";
                     options.RequireHttpsMetadata = false;
-                    options.Audience = "api1";
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidAudiences = new List<string>
+                        {
+                            "basic_person",
+                            "basic_person_read",
+                            "basic_person_write"
+                        }
+
+                    };
                 });
 
             services.AddCors(options =>
@@ -62,17 +66,7 @@ namespace core.api
                 });
             });
 
-            //services.AddDbContext<VirtualCollegeContext>(options =>
-            //            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<VirtualCollegeContext>(options =>
-            {
-                var connectionString = Environment.GetEnvironmentVariable("HEROKU_POSTGRES");
-                if (connectionString != null)
-                {
-                    options.UseNpgsql(connectionString);
-                }
-                else throw new Exception("Database variable not set");
-            });
+            services.AddDbContext<VirtualCollegeContext>();
 
             services.AddOData();
         }
