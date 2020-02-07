@@ -3,6 +3,7 @@ using core.logic.ApiModel.PersonModel;
 using core.logic.Supervisor;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,9 @@ using System.Threading.Tasks;
 namespace core.api.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
-    public class PeopleController : ControllerBase
+    public class PeopleController : AuthController
     {
         private readonly PersonSupervisor personSupervisor;
         private readonly VirtualCollegeContext context;
@@ -28,11 +30,12 @@ namespace core.api.Controllers
         [EnableQuery()]
         public async Task<ActionResult<IEnumerable<PersonModel>>> GetPeople()
         {
+            var read = VerifyUserHasScope("basic_person_read");
+            var x = new JsonResult(from c in User.Claims select new { c.Type, c.Value }).ToString();
             return await personSupervisor.GetPeopleAsync();
         }
 
         [HttpGet]
-        [Authorize]
         [Route("secure")]
         public IActionResult GetUser()
         {

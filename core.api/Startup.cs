@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using core.data;
 using core.logic.ApiModel.PersonModel;
@@ -15,7 +16,7 @@ namespace core.api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration ,IWebHostEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             Env = env;
@@ -44,7 +45,17 @@ namespace core.api
                 {
                     options.Authority = Env.IsDevelopment() ? "http://localhost:5000" : "https://virtualcollege-identity.herokuapp.com/";
                     options.RequireHttpsMetadata = false;
-                    options.Audience = "basic_person_read basic_person_write";
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidAudiences = new List<string>
+                        {
+                            "basic_person",
+                            "basic_person_read",
+                            "basic_person_write"
+                        }
+
+                    };
                 });
 
             services.AddCors(options =>
